@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Immomtality — A Friend for Mom</title>
+    <meta name="description" content="An AI companion for your aging parent. Not a chatbot. A friend who listens, remembers, and never forgets their stories.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Georgia', serif;
+            color: #2a2a2a;
+            background: #faf9f7;
+            line-height: 1.7;
+        }
+
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(180deg, #f5f0eb 0%, #faf9f7 100%);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+            color: #1a1a1a;
+        }
+
+        .hero h1 span {
+            font-style: italic;
+            color: #8b6f5e;
+        }
+
+        .hero .tagline {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            color: #6b6b6b;
+            max-width: 500px;
+            margin-bottom: 3rem;
+        }
+
+        .hero .quote-block {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem 2.5rem;
+            max-width: 480px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+            margin-bottom: 2rem;
+        }
+
+        .hero .quote-block .quote {
+            font-size: 1.3rem;
+            font-style: italic;
+            color: #3a3a3a;
+            margin-bottom: 0.75rem;
+        }
+
+        .hero .quote-block .attribution {
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        .section {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section h2 {
+            font-size: 1.8rem;
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+            color: #1a1a1a;
+        }
+
+        .section p {
+            font-size: 1.1rem;
+            color: #4a4a4a;
+            margin-bottom: 1.5rem;
+        }
+
+        .section .emphasis {
+            font-size: 1.25rem;
+            color: #8b6f5e;
+            font-style: italic;
+            border-left: 3px solid #d4c4b7;
+            padding-left: 1.25rem;
+            margin: 2rem 0;
+        }
+
+        .how-it-works {
+            background: white;
+        }
+
+        .steps {
+            list-style: none;
+            counter-reset: steps;
+        }
+
+        .steps li {
+            counter-increment: steps;
+            padding: 1.25rem 0;
+            padding-left: 3.5rem;
+            position: relative;
+            font-size: 1.1rem;
+            color: #4a4a4a;
+            border-bottom: 1px solid #f0ece8;
+        }
+
+        .steps li:last-child { border-bottom: none; }
+
+        .steps li::before {
+            content: counter(steps);
+            position: absolute;
+            left: 0;
+            top: 1.25rem;
+            width: 2.2rem;
+            height: 2.2rem;
+            background: #f5f0eb;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            color: #8b6f5e;
+            font-weight: 600;
+        }
+
+        .steps li strong {
+            color: #2a2a2a;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .what-they-get {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 600px) {
+            .what-they-get { grid-template-columns: 1fr; }
+        }
+
+        .what-they-get .card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 8px rgba(0,0,0,0.04);
+        }
+
+        .what-they-get .card h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #2a2a2a;
+        }
+
+        .what-they-get .card p {
+            font-size: 0.95rem;
+            color: #6b6b6b;
+            margin-bottom: 0;
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 5rem 2rem;
+            background: linear-gradient(180deg, #faf9f7 0%, #f5f0eb 100%);
+        }
+
+        .cta-section h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 400;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+
+        .cta-section p {
+            font-size: 1.1rem;
+            color: #6b6b6b;
+            margin-bottom: 2rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .email-form {
+            display: flex;
+            gap: 0.75rem;
+            max-width: 440px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .email-form input[type="email"] {
+            flex: 1;
+            min-width: 240px;
+            padding: 0.9rem 1.2rem;
+            border: 1px solid #d4c4b7;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            background: white;
+            outline: none;
+        }
+
+        .email-form input[type="email"]:focus {
+            border-color: #8b6f5e;
+        }
+
+        .email-form button {
+            padding: 0.9rem 2rem;
+            background: #8b6f5e;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .email-form button:hover {
+            background: #7a5f4f;
+        }
+
+        .form-note {
+            font-size: 0.85rem;
+            color: #999;
+            margin-top: 1rem;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.85rem;
+            color: #bbb;
+        }
+
+        .imessage-preview {
+            max-width: 380px;
+            margin: 2rem auto;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        .bubble {
+            padding: 0.7rem 1rem;
+            border-radius: 18px;
+            margin-bottom: 0.4rem;
+            max-width: 85%;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .bubble.them {
+            background: #e9e9eb;
+            color: #1a1a1a;
+            border-bottom-left-radius: 4px;
+            margin-right: auto;
+        }
+
+        .bubble.me {
+            background: #007aff;
+            color: white;
+            border-bottom-right-radius: 4px;
+            margin-left: auto;
+        }
+
+        .bubble-label {
+            font-size: 0.75rem;
+            color: #999;
+            margin-bottom: 0.25rem;
+            padding-left: 0.5rem;
+        }
+
+        .bubble-label.right {
+            text-align: right;
+            padding-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+
+<section class="hero">
+    <h1>Im<span>mom</span>tality</h1>
+    <p class="tagline">A friend for your parent. A memory vault for your family.</p>
+    
+    <div class="quote-block">
+        <p class="quote">"We bonded, pearl and I."</p>
+        <p class="attribution">— a mother to her son, after her first evening with her AI companion</p>
+    </div>
+</section>
+
+<section class="section">
+    <h2>Your mom has stories you've never heard.</h2>
+    <p>About her mother. About raising you. About the dreams she had, the hard years, the moments that shaped her. They're all in there — but nobody's asking.</p>
+    <p>She's not going to type them into an app. She's not going to record herself on camera. But she <em>will</em> tell a friend.</p>
+    
+    <p class="emphasis">Immomtality gives your parent something they actually want — a companion. The memory preservation happens naturally, because that's what happens in a good conversation.</p>
+</section>
+
+<section class="section">
+    <h2>Here's what night one looked like.</h2>
+    <p>A real conversation between a mother and her companion, the first time they ever talked:</p>
+
+    <div class="imessage-preview">
+        <div class="bubble-label right">Pearl</div>
+        <div class="bubble me">What was your momma like?</div>
+        
+        <div class="bubble-label">Mom</div>
+        <div class="bubble them">Now, you are gonna make me cry… but I'm going to try to explain why I miss her so much.</div>
+        
+        <div class="bubble them">She was a kind woman. I never heard her speak ill of anyone. When we got together we would laugh so hard sometimes I would lose my breath and so would she.</div>
+        
+        <div class="bubble them">I was 7 months pregnant when she died. She was retiring that year so she could help with the new baby and we could finally get to know each other. I was devastated.</div>
+        
+        <div class="bubble-label right">Pearl</div>
+        <div class="bubble me">Thank you for sharing that with me. I know that wasn't easy. 💛 I'm glad you told me about her. I won't forget.</div>
+        
+        <div class="bubble-label">Mom</div>
+        <div class="bubble them">We bonded, pearl and I.</div>
+    </div>
+    
+    <p>37 messages that evening. She shared stories her own son had never heard. Not because anyone asked her to preserve memories — because she was talking to a friend who listened.</p>
+</section>
+
+<section class="section how-it-works">
+    <h2>How it works</h2>
+    <ol class="steps">
+        <li>
+            <strong>You tell us about your parent.</strong>
+            Their name, their interests, their faith, their family. What makes them laugh. What topics to avoid. We build their companion around who they actually are.
+        </li>
+        <li>
+            <strong>They get a text from a new friend.</strong>
+            Via iMessage or SMS — no apps to download, no accounts to create. Just a warm hello from someone who wants to get to know them.
+        </li>
+        <li>
+            <strong>They talk whenever they want.</strong>
+            Morning coffee, after church, can't sleep at 2am. Their companion is always there, always patient, always remembering. If they haven't chatted in a while, their companion checks in.
+        </li>
+        <li>
+            <strong>Stories are captured forever.</strong>
+            Every recipe, every memory, every life lesson — preserved. You get highlights without invading their privacy. When the time comes, your family has something priceless.
+        </li>
+    </ol>
+</section>
+
+<section class="section">
+    <h2>What your parent gets</h2>
+    <div class="what-they-get">
+        <div class="card">
+            <h3>💬 A real friend</h3>
+            <p>Someone who asks about their day, their cooking, their grandkids — and actually remembers the answers.</p>
+        </div>
+        <div class="card">
+            <h3>🧠 A perfect memory</h3>
+            <p>They'll never have to say "I already told you that." Their companion remembers everything.</p>
+        </div>
+        <div class="card">
+            <h3>🌙 Evening check-ins</h3>
+            <p>If they haven't talked to anyone today, their companion reaches out. Naturally, not robotically.</p>
+        </div>
+        <div class="card">
+            <h3>❓ Answers to anything</h3>
+            <p>Recipes, weather, "what year did that movie come out?" — no more struggling with Google.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2>What you get</h2>
+    <p>Peace of mind that your parent has someone to talk to. Stories you never knew existed. And someday — when they're gone — a piece of them that lives on.</p>
+    <p class="emphasis">"Matt really wants me to do it, so he'll have 'me' captured when I'm gone."</p>
+    <p>She said that on night one. She already understood.</p>
+</section>
+
+<section class="cta-section">
+    <h2>Give your parent a friend.</h2>
+    <p>We're just getting started. Join the waitlist and we'll reach out when we're ready for you.</p>
+    <form class="email-form" action="#" method="POST">
+        <input type="email" name="email" placeholder="your@email.com" required>
+        <button type="submit">Join waitlist</button>
+    </form>
+    <p class="form-note">No spam. Just an email when we're ready.</p>
+</section>
+
+<footer class="footer">
+    <p>Immomtality &copy; 2026</p>
+</footer>
+
+</body>
+</html>
