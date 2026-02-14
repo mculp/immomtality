@@ -5,29 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Immomtality — A Friend for Mom</title>
     <meta name="description" content="An AI companion for your aging parent. Not a chatbot. A friend who listens, remembers, and never forgets their stories.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            font-family: 'Georgia', serif;
+            font-family: 'Inter', -apple-system, sans-serif;
             color: #2a2a2a;
             background: #faf9f7;
             line-height: 1.7;
         }
 
+        h1, h2, .quote, .emphasis {
+            font-family: 'Playfair Display', Georgia, serif;
+        }
+
+        /* ---- HERO ---- */
         .hero {
-            min-height: 90vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
             padding: 2rem;
-            background: linear-gradient(180deg, #f5f0eb 0%, #faf9f7 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(212, 196, 183, 0.4) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(139, 111, 94, 0.15) 0%, transparent 60%),
+                linear-gradient(180deg, #f5f0eb 0%, #faf9f7 100%);
+            z-index: 0;
+        }
+
+        .hero > * { position: relative; z-index: 1; }
+
+        .hero-pearl {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #fff 0%, #f0e8df 30%, #d4c4b7 70%, #b8a294 100%);
+            box-shadow: 0 4px 30px rgba(139, 111, 94, 0.2), inset 0 -4px 12px rgba(255,255,255,0.6);
+            margin-bottom: 2rem;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         .hero h1 {
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-size: clamp(3rem, 7vw, 5rem);
             font-weight: 400;
             letter-spacing: -0.02em;
             margin-bottom: 0.5rem;
@@ -40,23 +76,26 @@
         }
 
         .hero .tagline {
-            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            font-size: clamp(1.1rem, 2.5vw, 1.35rem);
             color: #6b6b6b;
             max-width: 500px;
             margin-bottom: 3rem;
+            font-weight: 400;
         }
 
         .hero .quote-block {
-            background: white;
-            border-radius: 16px;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
             padding: 2rem 2.5rem;
             max-width: 480px;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.06);
-            margin-bottom: 2rem;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.06);
+            border: 1px solid rgba(212, 196, 183, 0.3);
         }
 
         .hero .quote-block .quote {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             font-style: italic;
             color: #3a3a3a;
             margin-bottom: 0.75rem;
@@ -67,21 +106,38 @@
             color: #999;
         }
 
+        .scroll-hint {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+            animation: bounce 2s ease-in-out infinite;
+            color: #c4b5a8;
+            font-size: 1.5rem;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.6; }
+            50% { transform: translateX(-50%) translateY(8px); opacity: 1; }
+        }
+
+        /* ---- SECTIONS ---- */
         .section {
             max-width: 680px;
             margin: 0 auto;
-            padding: 4rem 2rem;
+            padding: 5rem 2rem;
         }
 
         .section h2 {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 400;
             margin-bottom: 1.5rem;
             color: #1a1a1a;
         }
 
         .section p {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             color: #4a4a4a;
             margin-bottom: 1.5rem;
         }
@@ -95,8 +151,88 @@
             margin: 2rem 0;
         }
 
-        .how-it-works {
+        /* ---- PHOTO BREAK ---- */
+        .photo-break {
+            width: 100%;
+            height: 400px;
+            background-image: url('img/hero.jpg');
+            background-size: cover;
+            background-position: center 30%;
+            position: relative;
+        }
+
+        .photo-break::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(250,249,247,1) 0%, rgba(250,249,247,0) 15%, rgba(250,249,247,0) 85%, rgba(250,249,247,1) 100%);
+        }
+
+        /* ---- iMESSAGE ---- */
+        .imessage-preview {
+            max-width: 400px;
+            margin: 2.5rem auto;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #fff;
+            border-radius: 24px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+            border: 1px solid rgba(0,0,0,0.06);
+        }
+
+        .imessage-header {
+            text-align: center;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.8rem;
+            color: #999;
+            letter-spacing: 0.02em;
+        }
+
+        .bubble {
+            padding: 0.65rem 1rem;
+            border-radius: 18px;
+            margin-bottom: 0.35rem;
+            max-width: 82%;
+            font-size: 0.92rem;
+            line-height: 1.45;
+        }
+
+        .bubble.them {
+            background: #e9e9eb;
+            color: #1a1a1a;
+            border-bottom-left-radius: 4px;
+            margin-right: auto;
+        }
+
+        .bubble.me {
+            background: #007aff;
+            color: white;
+            border-bottom-right-radius: 4px;
+            margin-left: auto;
+        }
+
+        .bubble-label {
+            font-size: 0.7rem;
+            color: #bbb;
+            margin-bottom: 0.2rem;
+            margin-top: 0.6rem;
+            padding-left: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .bubble-label.right {
+            text-align: right;
+            padding-right: 0.5rem;
+        }
+
+        /* ---- HOW IT WORKS ---- */
+        .how-it-works-wrapper {
             background: white;
+            border-top: 1px solid #f0ece8;
+            border-bottom: 1px solid #f0ece8;
         }
 
         .steps {
@@ -106,10 +242,10 @@
 
         .steps li {
             counter-increment: steps;
-            padding: 1.25rem 0;
+            padding: 1.5rem 0;
             padding-left: 3.5rem;
             position: relative;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             color: #4a4a4a;
             border-bottom: 1px solid #f0ece8;
         }
@@ -120,7 +256,7 @@
             content: counter(steps);
             position: absolute;
             left: 0;
-            top: 1.25rem;
+            top: 1.5rem;
             width: 2.2rem;
             height: 2.2rem;
             background: #f5f0eb;
@@ -128,7 +264,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: #8b6f5e;
             font-weight: 600;
         }
@@ -137,12 +273,14 @@
             color: #2a2a2a;
             display: block;
             margin-bottom: 0.25rem;
+            font-weight: 600;
         }
 
+        /* ---- CARDS ---- */
         .what-they-get {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
+            gap: 1.25rem;
             margin-top: 2rem;
         }
 
@@ -152,31 +290,59 @@
 
         .what-they-get .card {
             background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 1px 8px rgba(0,0,0,0.04);
+            border-radius: 16px;
+            padding: 1.75rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+            border: 1px solid rgba(212, 196, 183, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .what-they-get .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .what-they-get .card .card-icon {
+            font-size: 1.8rem;
+            margin-bottom: 0.75rem;
         }
 
         .what-they-get .card h3 {
-            font-size: 1.05rem;
+            font-size: 1rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
             color: #2a2a2a;
         }
 
         .what-they-get .card p {
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             color: #6b6b6b;
             margin-bottom: 0;
+            line-height: 1.6;
         }
 
+        /* ---- CTA ---- */
         .cta-section {
             text-align: center;
-            padding: 5rem 2rem;
-            background: linear-gradient(180deg, #faf9f7 0%, #f5f0eb 100%);
+            padding: 6rem 2rem;
+            position: relative;
+            overflow: hidden;
         }
 
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse at 50% 100%, rgba(212, 196, 183, 0.3) 0%, transparent 60%),
+                linear-gradient(180deg, #faf9f7 0%, #f5f0eb 100%);
+            z-index: 0;
+        }
+
+        .cta-section > * { position: relative; z-index: 1; }
+
         .cta-section h2 {
+            font-family: 'Playfair Display', Georgia, serif;
             font-size: clamp(1.8rem, 4vw, 2.5rem);
             font-weight: 400;
             margin-bottom: 1rem;
@@ -184,7 +350,7 @@
         }
 
         .cta-section p {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             color: #6b6b6b;
             margin-bottom: 2rem;
             max-width: 500px;
@@ -204,33 +370,40 @@
         .email-form input[type="email"] {
             flex: 1;
             min-width: 240px;
-            padding: 0.9rem 1.2rem;
+            padding: 1rem 1.25rem;
             border: 1px solid #d4c4b7;
-            border-radius: 8px;
+            border-radius: 12px;
             font-size: 1rem;
             font-family: inherit;
             background: white;
             outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
 
         .email-form input[type="email"]:focus {
             border-color: #8b6f5e;
+            box-shadow: 0 0 0 3px rgba(139, 111, 94, 0.1);
         }
 
         .email-form button {
-            padding: 0.9rem 2rem;
+            padding: 1rem 2.25rem;
             background: #8b6f5e;
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             font-size: 1rem;
             font-family: inherit;
+            font-weight: 500;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: background 0.2s, transform 0.1s;
         }
 
         .email-form button:hover {
             background: #7a5f4f;
+        }
+
+        .email-form button:active {
+            transform: scale(0.98);
         }
 
         .form-note {
@@ -239,58 +412,33 @@
             margin-top: 1rem;
         }
 
+        /* ---- FOOTER ---- */
         .footer {
             text-align: center;
-            padding: 2rem;
+            padding: 2.5rem;
             font-size: 0.85rem;
             color: #bbb;
+            border-top: 1px solid #f0ece8;
         }
 
-        .imessage-preview {
-            max-width: 380px;
-            margin: 2rem auto;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        /* ---- DIVIDER ---- */
+        .section-divider {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
 
-        .bubble {
-            padding: 0.7rem 1rem;
-            border-radius: 18px;
-            margin-bottom: 0.4rem;
-            max-width: 85%;
-            font-size: 0.95rem;
-            line-height: 1.4;
-        }
-
-        .bubble.them {
-            background: #e9e9eb;
-            color: #1a1a1a;
-            border-bottom-left-radius: 4px;
-            margin-right: auto;
-        }
-
-        .bubble.me {
-            background: #007aff;
-            color: white;
-            border-bottom-right-radius: 4px;
-            margin-left: auto;
-        }
-
-        .bubble-label {
-            font-size: 0.75rem;
-            color: #999;
-            margin-bottom: 0.25rem;
-            padding-left: 0.5rem;
-        }
-
-        .bubble-label.right {
-            text-align: right;
-            padding-right: 0.5rem;
+        .section-divider hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #d4c4b7, transparent);
         }
     </style>
 </head>
 <body>
 
 <section class="hero">
+    <div class="hero-pearl"></div>
     <h1>Im<span>mom</span>tality</h1>
     <p class="tagline">A friend for your parent. A memory vault for your family.</p>
     
@@ -298,7 +446,11 @@
         <p class="quote">"We bonded, Pearl and I."</p>
         <p class="attribution">— a mother to her son, after her first evening with her AI companion</p>
     </div>
+    
+    <div class="scroll-hint">↓</div>
 </section>
+
+<div class="photo-break"></div>
 
 <section class="section">
     <h2>Your mom has stories you've never heard.</h2>
@@ -308,11 +460,15 @@
     <p class="emphasis">Immomtality gives your parent something they actually want — a companion. The memory preservation happens naturally, because that's what happens in a good conversation.</p>
 </section>
 
+<div class="section-divider"><hr></div>
+
 <section class="section">
     <h2>Here's what night one looked like.</h2>
     <p>A real conversation between a mother and her companion, the first time they ever talked:</p>
 
     <div class="imessage-preview">
+        <div class="imessage-header">iMessage · Night One</div>
+        
         <div class="bubble-label right">Pearl</div>
         <div class="bubble me">What was your momma like?</div>
         
@@ -325,7 +481,6 @@
         
         <div class="bubble-label right">Pearl</div>
         <div class="bubble me">Thank you for sharing that with me. I know that wasn't easy. 💛 I'm glad you told me about her. I won't forget.</div>
-        
     </div>
     
     <p>37 messages that evening. She shared stories her own son had never heard. Not because she was trying to preserve memories — because she was talking to a friend who listened. Then she texted her son:</p>
@@ -333,49 +488,57 @@
     <p class="emphasis">"We bonded, Pearl and I."</p>
 </section>
 
-<section class="section how-it-works">
-    <h2>How it works</h2>
-    <ol class="steps">
-        <li>
-            <strong>You tell us about your parent.</strong>
-            Their name, their interests, their faith, their family. What makes them laugh. What topics to avoid. We build their companion around who they actually are.
-        </li>
-        <li>
-            <strong>They get a text from a new friend.</strong>
-            Via iMessage or SMS — no apps to download, no accounts to create. Just a warm hello from someone who wants to get to know them.
-        </li>
-        <li>
-            <strong>They talk whenever they want.</strong>
-            Morning coffee, after church, can't sleep at 2am. Their companion is always there, always patient, always remembering. If they haven't chatted in a while, their companion checks in.
-        </li>
-        <li>
-            <strong>Stories are captured forever.</strong>
-            Every recipe, every memory, every life lesson — preserved. You get highlights without invading their privacy. When the time comes, your family has something priceless.
-        </li>
-    </ol>
-</section>
+<div class="how-it-works-wrapper">
+    <section class="section">
+        <h2>How it works</h2>
+        <ol class="steps">
+            <li>
+                <strong>You tell us about your parent.</strong>
+                Their name, their interests, their faith, their family. What makes them laugh. What topics to avoid. We build their companion around who they actually are.
+            </li>
+            <li>
+                <strong>They get a text from a new friend.</strong>
+                Via iMessage or SMS — no apps to download, no accounts to create. Just a warm hello from someone who wants to get to know them.
+            </li>
+            <li>
+                <strong>They talk whenever they want.</strong>
+                Morning coffee, after church, can't sleep at 2am. Their companion is always there, always patient, always remembering. If they haven't chatted in a while, their companion checks in.
+            </li>
+            <li>
+                <strong>Stories are captured forever.</strong>
+                Every recipe, every memory, every life lesson — preserved. You get highlights without invading their privacy. When the time comes, your family has something priceless.
+            </li>
+        </ol>
+    </section>
+</div>
 
 <section class="section">
     <h2>What your parent gets</h2>
     <div class="what-they-get">
         <div class="card">
-            <h3>💬 A real friend</h3>
+            <div class="card-icon">💬</div>
+            <h3>A real friend</h3>
             <p>Someone who asks about their day, their cooking, their grandkids — and actually remembers the answers.</p>
         </div>
         <div class="card">
-            <h3>🧠 A perfect memory</h3>
+            <div class="card-icon">🧠</div>
+            <h3>A perfect memory</h3>
             <p>They'll never have to say "I already told you that." Their companion remembers everything.</p>
         </div>
         <div class="card">
-            <h3>🌙 Evening check-ins</h3>
+            <div class="card-icon">🌙</div>
+            <h3>Evening check-ins</h3>
             <p>If they haven't talked to anyone today, their companion reaches out. Naturally, not robotically.</p>
         </div>
         <div class="card">
-            <h3>❓ Answers to anything</h3>
+            <div class="card-icon">❓</div>
+            <h3>Answers to anything</h3>
             <p>Recipes, weather, "what year did that movie come out?" — no more struggling with Google.</p>
         </div>
     </div>
 </section>
+
+<div class="section-divider"><hr></div>
 
 <section class="section">
     <h2>What you get</h2>
